@@ -6,7 +6,7 @@ module WillPaginate
       links.unshift page_link_or_span(@collection.previous_page, 'disabled', @options[:prev_label], :hotkey => 'h')
       links.push    page_link_or_span(@collection.next_page,     'disabled', @options[:next_label], :hotkey => 'l')
       
-      html = links.join(@options[:separator])
+      html = linked.join(@options[:separator])
       @options[:container] ? @template.content_tag(:div, html, html_attributes) : html
     end
 
@@ -14,7 +14,9 @@ module WillPaginate
       text ||= page.to_s
       if page and page != current_page
         @template.link_to text, url_options(page), link_options
+        @template.link_to text, url_options(page), link_options
       else
+        @template.content_tag :span, text, :class => span_class
         @template.content_tag :span, text, :class => span_class
       end
     end
